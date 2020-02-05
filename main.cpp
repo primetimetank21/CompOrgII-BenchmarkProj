@@ -16,29 +16,31 @@ using namespace std;
 typedef chrono::high_resolution_clock Clock;
 
 // Function Declarations
-double intOpBenchmark();
-double floatOpBenchmark();
-double memoryOpBenchmark();
-double hardDriveOpBenchmark();
+unsigned long long intOpBenchmark();
+unsigned long long floatOpBenchmark();
+unsigned long long memoryOpBenchmark();
+unsigned long long hardDriveOpBenchmark();
+void printResult(string);
+void writeResult(string);
 
 // Main
 int main() {
     // Variables to store results of each benchmark
-    double int_microseconds       = intOpBenchmark();
-    double float_microseconds     = floatOpBenchmark();
-    double memory_microseconds    = memoryOpBenchmark();
-    double hardDrive_microseconds = hardDriveOpBenchmark();
+    unsigned long long int_microseconds       = intOpBenchmark();
+    unsigned long long float_microseconds     = floatOpBenchmark();
+    unsigned long long memory_microseconds    = memoryOpBenchmark();
+    unsigned long long hardDrive_microseconds = hardDriveOpBenchmark();
 
     // Output each result to console
     cout << "32-bit Integer operation benchmark:\t\t\t"    << int_microseconds       << " microseconds\n";
     cout << "32-bit Floating point operation benchmark:\t" << float_microseconds     << " microseconds\n";
     cout << "Memory benchmark:\t\t\t\t\t\t\t"              << memory_microseconds    << " microseconds\n";
     cout << "Hard drive benchmark:\t\t\t\t\t\t"            << hardDrive_microseconds << " microseconds\n";
-    
+
     // Write results to a file
     ofstream results;
     results.open("/Users/earltankardjr/comporgii/benchmark_project/benchmarkmaker.cpp/benchmarkmaker.cpp/benchmark_results.txt");
-    
+
     results << "Benchmark Results:\n";
     results << "32-bit Integer operation benchmark:\t\t"      << int_microseconds       << " microseconds\n"
             << "32-bit Floating point operation benchmark:\t" << float_microseconds     << " microseconds\n"
@@ -56,7 +58,7 @@ int main() {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
 
-double intOpBenchmark() {
+unsigned long long intOpBenchmark() {
     const unsigned int n = 2;
     auto int_t1 = Clock::now();         // starts timer
     
@@ -71,7 +73,7 @@ double intOpBenchmark() {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-double floatOpBenchmark() {
+unsigned long long floatOpBenchmark() {
     const float n = 2;
     auto float_t1 = Clock::now();       // starts timer
    
@@ -86,14 +88,18 @@ double floatOpBenchmark() {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-double memoryOpBenchmark() {
-    const long long int _size = 5 * pow(10,9);
-    long int array[_size];
+unsigned long long memoryOpBenchmark() {
+    const long long int _size = pow(2.5,9);
+    long int array0[_size], array1[_size];
+    
     auto memory_t1 = Clock::now();      // starts timer
 
     
-    for(unsigned long long int i = 0; i < _size; i++) {array[i] = 1;}   // 5 * 10^9 writes of elements
-    for(long int i : array)                           {i;}              // 5 * 10^9 reads  of elements
+    for(unsigned long int i = 0; i < _size; i++) {array0[i] = 1;}   // 5 * 10^9 writes of elements
+    for(unsigned long int i = 0; i < _size; i++) {array1[i] = 1;}
+
+    for(long int i : array0)                           {i;}         // 5 * 10^9 reads  of elements
+    for(long int i : array1)                           {i;}
     
     auto memory_t2 = Clock::now();      // ends timer
     
@@ -102,7 +108,7 @@ double memoryOpBenchmark() {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
-double hardDriveOpBenchmark() {
+unsigned long long hardDriveOpBenchmark() {
     ifstream readfile;
     ofstream writefile;
     char chars[4];
