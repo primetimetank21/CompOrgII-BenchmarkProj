@@ -20,8 +20,6 @@ unsigned long long intOpBenchmark();
 unsigned long long floatOpBenchmark();
 unsigned long long memoryOpBenchmark();
 unsigned long long hardDriveOpBenchmark();
-void printResult(string);
-void writeResult(string);
 
 // Main
 int main() {
@@ -46,6 +44,7 @@ int main() {
             << "32-bit Floating point operation benchmark:\t" << float_microseconds     << " microseconds\n"
             << "Memory benchmark:\t\t\t\t"                    << memory_microseconds    << " microseconds\n"
             << "Hard drive benchmark:\t\t\t\t"                << hardDrive_microseconds << " microseconds\n";
+    
     results.close();
     return 0;
 }
@@ -89,17 +88,23 @@ unsigned long long floatOpBenchmark() {
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 unsigned long long memoryOpBenchmark() {
-    const long long int _size = pow(2.5,9);
-    long int array0[_size], array1[_size];
+    const long long int _size = 5 * pow(10,5);
+    int array0[_size];
     
     auto memory_t1 = Clock::now();      // starts timer
 
     
-    for(unsigned long int i = 0; i < _size; i++) {array0[i] = 1;}   // 5 * 10^9 writes of elements
-    for(unsigned long int i = 0; i < _size; i++) {array1[i] = 1;}
-
-    for(long int i : array0)                           {i;}         // 5 * 10^9 reads  of elements
-    for(long int i : array1)                           {i;}
+    for(long long int j = 0; j < pow(10,4); j++) {
+        for(long long int i = 0; i < _size; i++) {
+            array0[i] = 1;      // 5 * 10^9 writes of elements
+        }
+    }
+    for(long long int j = 0; j < pow(10,4); j++) {
+        for(int i : array0) {
+            i;                  // 5 * 10^9 reads  of elements
+        }
+    }
+    
     
     auto memory_t2 = Clock::now();      // ends timer
     
