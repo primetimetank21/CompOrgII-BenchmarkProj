@@ -44,7 +44,7 @@ int main() {
             << "32-bit Floating point operation benchmark:\t" << float_microseconds     << " microseconds\n"
             << "Memory benchmark:\t\t\t\t"                    << memory_microseconds    << " microseconds\n"
             << "Hard drive benchmark:\t\t\t\t"                << hardDrive_microseconds << " microseconds\n";
-    
+
     results.close();
     return 0;
 }
@@ -120,14 +120,14 @@ unsigned long long hardDriveOpBenchmark() {
     auto hardDrive_t1 = Clock::now();       // starts timer
     
     writefile.open("/Users/earltankardjr/comporgii/benchmark_project/benchmarkmaker.cpp/benchmarkmaker.cpp/benchmark.txt");
-    for(unsigned long int i = 0; i < pow(10,9); i++) {
-        writefile << 'a'<< 'b'<< 'c'<< ' ';     // 10^9 writes to a file (4 BYTES AT A TIME)
+    for(unsigned long int i = 0; i < pow(10,9) / 4; i++) {
+        writefile << 'a'<< 'b'<< 'c'<< ' ';     // 10^9 bytes written to a file (4 BYTES AT A TIME)
     }
     writefile.close();
     
     readfile.open("/Users/earltankardjr/comporgii/benchmark_project/benchmarkmaker.cpp/benchmarkmaker.cpp/benchmark.txt");
-    for(unsigned long int i = 0; i < pow(10,9); i++) {
-        readfile >> chars;      // 10^9 reads from a file (even though chars == 3 bytes, program still reads the space; therefore the 4th byte is being read)
+    for(unsigned long int i = 0; i < pow(10,9) / 4; i++) {
+        readfile >> chars;      // 10^9 bytes read from a file (even though chars == 3 bytes, program still reads the space; therefore the 4th byte is being read)
     }
     readfile.close();
     
