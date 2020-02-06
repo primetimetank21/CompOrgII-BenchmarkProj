@@ -1,0 +1,5 @@
+Benchmark Results:
+32-bit Integer operation benchmark:		6422454027 microseconds
+32-bit Floating point operation benchmark:	6418995676 microseconds
+Memory benchmark:				27874191 microseconds
+Hard drive benchmark:				145627375 microseconds
